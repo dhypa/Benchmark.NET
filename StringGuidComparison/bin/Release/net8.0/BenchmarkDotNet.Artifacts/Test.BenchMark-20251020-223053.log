@@ -1,0 +1,216 @@
+// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 128 benchmark(s) in total *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+// start dotnet  restore --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true /p:ArtifactsPath="C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1/" /p:OutDir="C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1\bin\Release\net8.0/" /p:OutputPath="C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1\bin\Release\net8.0/" /p:PublishDir="C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1\publish/" in C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1
+// command took 1.03 sec and exited with 0
+// start dotnet  build -c Release --no-restore --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true /p:ArtifactsPath="C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1/" /p:OutDir="C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1\bin\Release\net8.0/" /p:OutputPath="C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1\bin\Release\net8.0/" /p:PublishDir="C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1\publish/" --output "C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1\bin\Release\net8.0/" in C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1
+// command took 7.39 sec and exited with 0
+// ***** Done, took 00:00:08 (8.62 sec)   *****
+// Found 128 benchmarks:
+//   BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=17654(...)9fc39 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=17654(...)9fc39 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=17654(...)9fc39 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=17654(...)9fc39 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=17654(...)9fc39 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=17654(...)9fc39 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=17654(...)9fc39 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=17654(...)9fc39 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=18397(...)65037 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=18397(...)65037 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=18397(...)65037 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=18397(...)65037 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=18397(...)65037 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=18397(...)65037 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=18397(...)65037 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=18397(...)65037 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=18397(...)65037 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=18397(...)65037 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=18397(...)65037 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=18397(...)65037 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=18397(...)65037 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=18397(...)65037 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=18397(...)65037 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=18397(...)65037 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=7007e(...)e17fb [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=7007e(...)e17fb [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=7007e(...)e17fb [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=7007e(...)e17fb [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=7007e(...)e17fb [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=7007e(...)e17fb [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=7007e(...)e17fb [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=7007e(...)e17fb [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=7007e(...)e17fb [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=7007e(...)e17fb [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=7007e(...)e17fb [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=7007e(...)e17fb [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=7007e(...)e17fb [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=7007e(...)e17fb [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=7007e(...)e17fb [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=7007e(...)e17fb [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=81f88(...)2e2d1 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=81f88(...)2e2d1 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=81f88(...)2e2d1 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=81f88(...)2e2d1 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=81f88(...)2e2d1 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=81f88(...)2e2d1 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=81f88(...)2e2d1 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=81f88(...)2e2d1 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=81f88(...)2e2d1 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=81f88(...)2e2d1 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=81f88(...)2e2d1 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=81f88(...)2e2d1 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=81f88(...)2e2d1 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=81f88(...)2e2d1 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=81f88(...)2e2d1 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=81f88(...)2e2d1 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=8fd77(...)43070 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=8fd77(...)43070 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=8fd77(...)43070 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=8fd77(...)43070 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=8fd77(...)43070 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=8fd77(...)43070 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=8fd77(...)43070 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=8fd77(...)43070 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=8fd77(...)43070 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=8fd77(...)43070 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=8fd77(...)43070 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=8fd77(...)43070 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=8fd77(...)43070 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=8fd77(...)43070 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=8fd77(...)43070 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=8fd77(...)43070 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=c5c63(...)4dee2 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=c5c63(...)4dee2 [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=c5c63(...)4dee2 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=c5c63(...)4dee2 [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=c5c63(...)4dee2 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=c5c63(...)4dee2 [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=c5c63(...)4dee2 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=c5c63(...)4dee2 [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=c5c63(...)4dee2 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=c5c63(...)4dee2 [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=c5c63(...)4dee2 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=c5c63(...)4dee2 [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=c5c63(...)4dee2 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=c5c63(...)4dee2 [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=c5c63(...)4dee2 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=c5c63(...)4dee2 [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f3fc3(...)4c3da [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f3fc3(...)4c3da [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f3fc3(...)4c3da [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f3fc3(...)4c3da [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f3fc3(...)4c3da [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f3fc3(...)4c3da [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f3fc3(...)4c3da [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f3fc3(...)4c3da [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f3fc3(...)4c3da [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f3fc3(...)4c3da [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f3fc3(...)4c3da [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f3fc3(...)4c3da [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f3fc3(...)4c3da [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f3fc3(...)4c3da [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f3fc3(...)4c3da [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f3fc3(...)4c3da [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f93e7(...)4b49d [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f93e7(...)4b49d [36], str=17654(...)9fc39 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f93e7(...)4b49d [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f93e7(...)4b49d [36], str=18397(...)65037 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f93e7(...)4b49d [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f93e7(...)4b49d [36], str=7007e(...)e17fb [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f93e7(...)4b49d [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f93e7(...)4b49d [36], str=81f88(...)2e2d1 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f93e7(...)4b49d [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f93e7(...)4b49d [36], str=8fd77(...)43070 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f93e7(...)4b49d [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f93e7(...)4b49d [36], str=c5c63(...)4dee2 [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f93e7(...)4b49d [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f93e7(...)4b49d [36], str=f3fc3(...)4c3da [36]]
+//   BenchMark.EqualsParse: DefaultJob [guid=f93e7(...)4b49d [36], str=f93e7(...)4b49d [36]]
+//   BenchMark.EqualsToString: DefaultJob [guid=f93e7(...)4b49d [36], str=f93e7(...)4b49d [36]]
+
+Setup power plan (GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c FriendlyName: High performance)
+// **************************
+// Benchmark: BenchMark.EqualsParse: DefaultJob [guid=17654(...)9fc39 [36], str=17654(...)9fc39 [36]]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet StringGuidComparison-DefaultJob-1.dll --anonymousPipes 1328 1548 --benchmarkName "Test.BenchMark.EqualsParse(guid: 176545f4-fc08-44bd-9c7a-f1803d59fc39, str: \"176545f4-fc08-44bd-9c7a-f1803d59fc39\")" --job Default --benchmarkId 0 in C:\projects\Benchmark.NET\Benchmark.NET\StringGuidComparison\bin\Release\net8.0\StringGuidComparison-DefaultJob-1\bin\Release\net8.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.4
+// Runtime=.NET 8.0.16 (8.0.16, 8.0.1625.21506), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 174300.00 ns, 174.3000 us/op
+WorkloadJitting  1: 1 op, 218000.00 ns, 218.0000 us/op
+
+OverheadJitting  2: 16 op, 410500.00 ns, 25.6563 us/op
+WorkloadJitting  2: 16 op, 412100.00 ns, 25.7563 us/op
+
+WorkloadPilot    1: 16 op, 2800.00 ns, 175.0000 ns/op
+WorkloadPilot    2: 32 op, 2400.00 ns, 75.0000 ns/op
+WorkloadPilot    3: 64 op, 3900.00 ns, 60.9375 ns/op
+WorkloadPilot    4: 128 op, 7100.00 ns, 55.4688 ns/op
+WorkloadPilot    5: 256 op, 13200.00 ns, 51.5625 ns/op
+WorkloadPilot    6: 512 op, 25700.00 ns, 50.1953 ns/op
+WorkloadPilot    7: 1024 op, 51500.00 ns, 50.2930 ns/op
+WorkloadPilot    8: 2048 op, 105000.00 ns, 51.2695 ns/op
+WorkloadPilot    9: 4096 op, 202500.00 ns, 49.4385 ns/op
+WorkloadPilot   10: 8192 op, 402900.00 ns, 49.1821 ns/op
+WorkloadPilot   11: 16384 op, 807700.00 ns, 49.2981 ns/op
+WorkloadPilot   12: 32768 op, 1618400.00 ns, 49.3896 ns/op
+WorkloadPilot   13: 65536 op, 3239200.00 ns, 49.4263 ns/op
+WorkloadPilot   14: 131072 op, 6478900.00 ns, 49.4301 ns/op
+WorkloadPilot   15: 262144 op, 12956900.00 ns, 49.4267 ns/op
+WorkloadPilot   16: 524288 op, 25923500.00 ns, 49.4452 ns/op
+WorkloadPilot   17: 1048576 op, 51853200.00 ns, 49.4511 ns/op
+WorkloadPilot   18: 2097152 op, 87996200.00 ns, 41.9599 ns/op
+WorkloadPilot   19: 4194304 op, 167062700.00 ns, 39.8309 ns/op
+WorkloadPilot   20: 8388608 op, 341144100.00 ns, 40.6675 ns/op
+WorkloadPilot   21: 16777216 op, 673844400.00 ns, 40.1643 ns/op
+
+OverheadWarmup   1: 16777216 op, 46063900.00 ns, 2.7456 ns/op
+OverheadWarmup   2: 16777216 op, 45907400.00 ns, 2.7363 ns/op
+OverheadWarmup   3: 16777216 op, 45883300.00 ns, 2.7349 ns/op
+OverheadWarmup   4: 16777216 op, 45872500.00 ns, 2.7342 ns/op
+OverheadWarmup   5: 16777216 op, 46170400.00 ns, 2.7520 ns/op
+OverheadWarmup   6: 16777216 op, 45745600.00 ns, 2.7267 ns/op
+OverheadWarmup   7: 16777216 op, 43735300.00 ns, 2.6068 ns/op
+OverheadWarmup   8: 16777216 op, 34414000.00 ns, 2.0512 ns/op
+OverheadWarmup   9: 16777216 op, 44356200.00 ns, 2.6438 ns/op
+OverheadWarmup  10: 16777216 op, 35493000.00 ns, 2.1155 ns/op
+
+OverheadActual   1: 16777216 op, 33584800.00 ns, 2.0018 ns/op
+OverheadActual   2: 16777216 op, 34487100.00 ns, 2.0556 ns/op
+OverheadActual   3: 16777216 op, 35894300.00 ns, 2.1395 ns/op
+OverheadActual   4: 16777216 op, 34442600.00 ns, 2.0529 ns/op
+OverheadActual   5: 16777216 op, 41925300.00 ns, 2.4989 ns/op
+OverheadActual   6: 16777216 op, 34294100.00 ns, 2.0441 ns/op
+OverheadActual   7: 16777216 op, 43136600.00 ns, 2.5711 ns/op
+OverheadActual   8: 16777216 op, 44903100.00 ns, 2.6764 ns/op
+OverheadActual   9: 16777216 op, 44351300.00 ns, 2.6435 ns/op
+OverheadActual  10: 16777216 op, 47287900.00 ns, 2.8186 ns/op
+OverheadActual  11: 16777216 op, 34191900.00 ns, 2.0380 ns/op
+OverheadActual  12: 16777216 op, 34408700.00 ns, 2.0509 ns/op
+OverheadActual  13: 16777216 op, 34663600.00 ns, 2.0661 ns/op
+OverheadActual  14: 16777216 op, 42165800.00 ns, 2.5133 ns/op
+OverheadActual  15: 16777216 op, 34671900.00 ns, 2.0666 ns/op
+OverheadActual  16: 16777216 op, 34470400.00 ns, 2.0546 ns/op
+OverheadActual  17: 16777216 op, 34339000.00 ns, 2.0468 ns/op
+OverheadActual  18: 16777216 op, 44672800.00 ns, 2.6627 ns/op
+OverheadActual  19: 16777216 op, 45323500.00 ns, 2.7015 ns/op
+OverheadActual  20: 16777216 op, 34475000.00 ns, 2.0549 ns/op
+
+WorkloadWarmup   1: 16777216 op, 679272700.00 ns, 40.4878 ns/op
+Successfully reverted power plan (GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c FriendlyName: High performance)
