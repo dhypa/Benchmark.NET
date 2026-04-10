@@ -62,7 +62,28 @@ public class ReadBenchmarks
         ) AS latest
         WHERE p.Id = @PlayerId;
         """;
-    private FormattableString PointReadSqlFormattable = FormattableStringFactory.Create(PointReadSql, []);
+    private const string PointReadSqlTemplate = """
+    SELECT
+        p.Id,
+        p.Name,
+        p.Age,
+        p.Salary,
+        p.Rating,
+        t.Name AS TeamName,
+        latest.Season AS LatestSeason,
+        latest.Points AS LatestPoints
+    FROM Players p
+    INNER JOIN Teams t ON t.Id = p.TeamId
+    OUTER APPLY
+    (
+        SELECT TOP (1) ps.Season, ps.Points
+        FROM PlayerSeasons ps
+        WHERE ps.PlayerId = p.Id
+        ORDER BY ps.Season DESC
+    ) AS latest
+    WHERE p.Id = {0}
+    """;
+    private FormattableString PointReadSqlFormattable = null!;
 
     private const string RosterPageSql = """
         SELECT TOP (@Take)
@@ -76,7 +97,7 @@ public class ReadBenchmarks
           AND p.Age >= @MinAge
         ORDER BY p.Rating DESC, p.Id ASC;
         """;
-    private FormattableString RosterPageSqlFormattable = FormattableStringFactory.Create(RosterPageSql, []);
+    private FormattableString RosterPageSqlFormattable = null!;
 
     private const string LeaderboardSql = """
         SELECT
@@ -91,7 +112,7 @@ public class ReadBenchmarks
         GROUP BY p.TeamId, t.Name
         ORDER BY AvgRating DESC, p.TeamId ASC;
         """;
-    private FormattableString LeaderboardSqlFormattable = FormattableStringFactory.Create(LeaderboardSql, []);
+    private FormattableString LeaderboardSqlFormattable = null!;
 
     private const string ProfileSql = """
         SELECT
@@ -123,7 +144,35 @@ public class ReadBenchmarks
         WHERE pa.PlayerId = @PlayerId
         ORDER BY pa.AwardedOnUtc DESC;
         """;
-    private FormattableString ProfileSqlFormattable = FormattableStringFactory.Create(ProfileSql, []);
+    private FormattableString ProfileSqlFormattable = null!;
+    
+
+    private const string RosterPageSqlTemplate = """
+    SELECT TOP ({2})
+        p.Id,
+        p.Name,
+        p.Age,
+        p.Salary,
+        p.Rating
+    FROM Players p
+    WHERE p.TeamId = {0}
+      AND p.Age >= {1}
+    ORDER BY p.Rating DESC, p.Id ASC;
+    """;
+
+    private const string LeaderboardSqlTemplate = """
+    SELECT
+        p.TeamId,
+        t.Name AS TeamName,
+        COUNT(*) AS PlayerCount,
+        AVG(CAST(p.Age AS float)) AS AvgAge,
+        AVG(p.Rating) AS AvgRating,
+        MAX(p.Salary) AS MaxSalary
+    FROM Players p
+    INNER JOIN Teams t ON t.Id = p.TeamId
+    GROUP BY p.TeamId, t.Name
+    ORDER BY AvgRating DESC, p.TeamId ASC;
+    """;
 
     // EF Core compiled queries: best-effort hot-path usage for read-only work.
     private static readonly Func<AppDbContext, Guid, PlayerCardDto?> EfPointReadQuery =
@@ -259,8 +308,19 @@ public class ReadBenchmarks
             _connection,
             ProfileSql,
             ("@PlayerId", SqlDbType.UniqueIdentifier, _targetPlayerId));
-    }
 
+        _pointReadSqlFormattable =
+    FormattableStringFactory.Create(PointReadSqlTemplate, _targetPlayerId);
+
+        _rosterPageSqlFormattable =
+            FormattableStringFactory.Create(RosterPageSqlTemplate, _targetTeamId, MinAge, PageSize);
+
+        _leaderboardSqlFormattable =
+            FormattableStringFactory.Create(LeaderboardSqlTemplate);
+    }
+    private FormattableString _pointReadSqlFormattable = null!;
+    private FormattableString _rosterPageSqlFormattable = null!;
+    private FormattableString _leaderboardSqlFormattable = null!;
     [GlobalCleanup]
     public void GlobalCleanup()
     {
@@ -309,15 +369,17 @@ public class ReadBenchmarks
     [Benchmark]
     public PlayerCardDto? EfCore_PointRead()
     {
-        using var db = _dbFactory.CreateDbContext();
-        return EfPointReadQuery(db, _targetPlayerId);
+        
+        return EfPointReadQuery(_dbContext, _targetPlayerId);
     }
     [BenchmarkCategory("PointRead")]
     [Benchmark]
     public PlayerCardDto? EfCore_Sql_PointRead()
     {
-        using var db = _dbFactory.CreateDbContext();
-        return db.Database.SqlQuery<PlayerCardDto>(PointReadSqlFormattable).AsNoTracking().FirstOrDefault();
+
+        return _dbContext.Database
+        .SqlQuery<PlayerCardDto>(_pointReadSqlFormattable)
+        .FirstOrDefault();
     }
 
     // ---------------------------
@@ -364,15 +426,15 @@ public class ReadBenchmarks
     [Benchmark]
     public List<RosterItemDto> EfCore_RosterPage()
     {
-        using var db = _dbFactory.CreateDbContext();
-        return EfRosterPageQuery(db, _targetTeamId, MinAge, PageSize).ToList();
+        
+        return EfRosterPageQuery(_dbContext, _targetTeamId, MinAge, PageSize).ToList();
     }
     [BenchmarkCategory("RosterPage")]
     [Benchmark]
     public List<RosterItemDto> EfCore_Sql_RosterPage()
     {
-        using var db = _dbFactory.CreateDbContext();
-        return db.Database.SqlQuery<RosterItemDto>(RosterPageSqlFormattable).AsNoTracking().ToList();
+        
+        return _dbContext.Database.SqlQuery<RosterItemDto>(_rosterPageSqlFormattable).AsNoTracking().ToList();
     }
 
     // ---------------------------
@@ -413,8 +475,8 @@ public class ReadBenchmarks
     [Benchmark]
     public List<TeamLeaderboardDto> EfCore_Leaderboard()
     {
-        using var db = _dbFactory.CreateDbContext();
-        return db.Players
+        
+        return _dbContext.Players
             .AsNoTracking()
             .GroupBy(p => new { p.TeamId, TeamName = p.Team.Name })
             .Select(g => new TeamLeaderboardDto
@@ -434,8 +496,8 @@ public class ReadBenchmarks
     [Benchmark]
     public List<TeamLeaderboardDto> EfCore_Sql_Leaderboard()
     {
-        using var db = _dbFactory.CreateDbContext();
-        return db.Database.SqlQuery<TeamLeaderboardDto>(LeaderboardSqlFormattable).ToList();
+        
+        return _dbContext.Database.SqlQuery<TeamLeaderboardDto>(_leaderboardSqlFormattable).AsNoTracking().ToList();
     }
 
     // ---------------------------
@@ -509,15 +571,83 @@ public class ReadBenchmarks
     [Benchmark]
     public PlayerProfileDto? EfCore_ProfileGraph()
     {
-        using var db = _dbFactory.CreateDbContext();
-        return EfProfileQuery(db, _targetPlayerId);
+        
+        return EfProfileQuery(_dbContext, _targetPlayerId);
     }
     [BenchmarkCategory("ProfileGraph")]
     [Benchmark]
-    public PlayerProfileDto? EfCore_Sql_ProfileGraph()
+    public PlayerProfileDto? EfCore_Sql_ProfileGraph_Split()
     {
-        using var db = _dbFactory.CreateDbContext();
-        return db.Database.SqlQuery<PlayerProfileDto>(ProfileSqlFormattable).AsNoTracking().FirstOrDefault();
+        var playerId = _targetPlayerId;
+
+        var head = _dbContext.Database
+            .SqlQuery<PlayerProfileHeadDto>(
+                $"""
+            SELECT
+                p.Id,
+                p.Name,
+                p.Age,
+                p.Salary,
+                p.Rating,
+                t.Name AS TeamName
+            FROM Players p
+            INNER JOIN Teams t ON t.Id = p.TeamId
+            WHERE p.Id = {playerId}
+            """)
+            .FirstOrDefault();
+
+        if (head is null)
+            return null;
+
+        var seasons = _dbContext.Database
+            .SqlQuery<SeasonLineDto>(
+                $"""
+            SELECT
+                ps.Season,
+                ps.Games,
+                ps.Points,
+                ps.Assists,
+                ps.Rebounds
+            FROM PlayerSeasons ps
+            WHERE ps.PlayerId = {playerId}
+            ORDER BY ps.Season DESC
+            """)
+            .ToList();
+
+        var achievements = _dbContext.Database
+            .SqlQuery<AchievementLineDto>(
+                $"""
+            SELECT
+                a.Name,
+                pa.AwardedOnUtc
+            FROM PlayerAchievements pa
+            INNER JOIN Achievements a ON a.Id = pa.AchievementId
+            WHERE pa.PlayerId = {playerId}
+            ORDER BY pa.AwardedOnUtc DESC
+            """)
+            .ToList();
+
+        return new PlayerProfileDto
+        {
+            Id = head.Id,
+            Name = head.Name,
+            Age = head.Age,
+            Salary = head.Salary,
+            Rating = head.Rating,
+            TeamName = head.TeamName,
+            Seasons = seasons,
+            Achievements = achievements
+        };
+    }
+
+    public sealed class PlayerProfileHeadDto
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; } = "";
+        public int Age { get; set; }
+        public decimal Salary { get; set; }
+        public double Rating { get; set; }
+        public string TeamName { get; set; } = "";
     }
 
     private SqlCommand CreatePreparedCommand(
