@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 BenchmarkRunner.Run<ReadBenchmarks>();
 
@@ -25,6 +26,8 @@ public class ReadBenchmarks
         "Server=localhost;Database=OrmBenchmarks;Trusted_Connection=True;TrustServerCertificate=True;";
 
     private PooledDbContextFactory<AppDbContext> _dbFactory = null!;
+    private AppDbContext _dbContext = null!;
+
     private SqlConnection _connection = null!;
 
     private Guid _targetPlayerId;
@@ -59,6 +62,7 @@ public class ReadBenchmarks
         ) AS latest
         WHERE p.Id = @PlayerId;
         """;
+    private FormattableString PointReadSqlFormattable = FormattableStringFactory.Create(PointReadSql, []);
 
     private const string RosterPageSql = """
         SELECT TOP (@Take)
@@ -72,6 +76,7 @@ public class ReadBenchmarks
           AND p.Age >= @MinAge
         ORDER BY p.Rating DESC, p.Id ASC;
         """;
+    private FormattableString RosterPageSqlFormattable = FormattableStringFactory.Create(RosterPageSql, []);
 
     private const string LeaderboardSql = """
         SELECT
@@ -86,6 +91,7 @@ public class ReadBenchmarks
         GROUP BY p.TeamId, t.Name
         ORDER BY AvgRating DESC, p.TeamId ASC;
         """;
+    private FormattableString LeaderboardSqlFormattable = FormattableStringFactory.Create(LeaderboardSql, []);
 
     private const string ProfileSql = """
         SELECT
@@ -117,6 +123,7 @@ public class ReadBenchmarks
         WHERE pa.PlayerId = @PlayerId
         ORDER BY pa.AwardedOnUtc DESC;
         """;
+    private FormattableString ProfileSqlFormattable = FormattableStringFactory.Create(ProfileSql, []);
 
     // EF Core compiled queries: best-effort hot-path usage for read-only work.
     private static readonly Func<AppDbContext, Guid, PlayerCardDto?> EfPointReadQuery =
@@ -222,6 +229,7 @@ public class ReadBenchmarks
             .Options;
 
         _dbFactory = new PooledDbContextFactory<AppDbContext>(options);
+        _dbContext = _dbFactory.CreateDbContext();
 
         using (var db = new AppDbContext(options))
         {
@@ -304,6 +312,13 @@ public class ReadBenchmarks
         using var db = _dbFactory.CreateDbContext();
         return EfPointReadQuery(db, _targetPlayerId);
     }
+    [BenchmarkCategory("PointRead")]
+    [Benchmark]
+    public PlayerCardDto? EfCore_Sql_PointRead()
+    {
+        using var db = _dbFactory.CreateDbContext();
+        return db.Database.SqlQuery<PlayerCardDto>(PointReadSqlFormattable).AsNoTracking().FirstOrDefault();
+    }
 
     // ---------------------------
     // 2) Paged roster query
@@ -351,6 +366,13 @@ public class ReadBenchmarks
     {
         using var db = _dbFactory.CreateDbContext();
         return EfRosterPageQuery(db, _targetTeamId, MinAge, PageSize).ToList();
+    }
+    [BenchmarkCategory("RosterPage")]
+    [Benchmark]
+    public List<RosterItemDto> EfCore_Sql_RosterPage()
+    {
+        using var db = _dbFactory.CreateDbContext();
+        return db.Database.SqlQuery<RosterItemDto>(RosterPageSqlFormattable).AsNoTracking().ToList();
     }
 
     // ---------------------------
@@ -407,6 +429,13 @@ public class ReadBenchmarks
             .OrderByDescending(x => x.AvgRating)
             .ThenBy(x => x.TeamId)
             .ToList();
+    }
+    [BenchmarkCategory("Leaderboard")]
+    [Benchmark]
+    public List<TeamLeaderboardDto> EfCore_Sql_Leaderboard()
+    {
+        using var db = _dbFactory.CreateDbContext();
+        return db.Database.SqlQuery<TeamLeaderboardDto>(LeaderboardSqlFormattable).ToList();
     }
 
     // ---------------------------
@@ -482,6 +511,13 @@ public class ReadBenchmarks
     {
         using var db = _dbFactory.CreateDbContext();
         return EfProfileQuery(db, _targetPlayerId);
+    }
+    [BenchmarkCategory("ProfileGraph")]
+    [Benchmark]
+    public PlayerProfileDto? EfCore_Sql_ProfileGraph()
+    {
+        using var db = _dbFactory.CreateDbContext();
+        return db.Database.SqlQuery<PlayerProfileDto>(ProfileSqlFormattable).AsNoTracking().FirstOrDefault();
     }
 
     private SqlCommand CreatePreparedCommand(
