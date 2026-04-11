@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DapperEfCoreSimple": {
+      "commandName": "Project",
+      "commandLineArgs": "-c Release"
+    }
+  }
+}
